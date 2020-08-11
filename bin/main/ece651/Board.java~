@@ -1,0 +1,120 @@
+package ece651;
+
+import java.util.HashMap;
+import java.util.Vector;
+
+import javafx.geometry.Point2D;
+
+public class Board {
+  private HashMap<Point2D, Stash> grid = new HashMap<>();
+  private HashMap<Point2D, Character> digMap=new HashMap<>();
+  private Vector<Point2D> correct;
+  int width=10;
+  int height=20;
+
+  public boolean checkWinner() {
+    if (correct.size() == grid.size()) {
+      return false;
+    }
+    return true;
+  }
+
+
+  private String output(String line) {
+    StringBuffer sb = new StringBuffer();
+    sb.append("--------------------------------\n");
+    sb.append(line);
+    sb.append("\n--------------------------------\n");
+    return sb.toString();
+  }
+  
+  public void dig(int x,int y) {
+    Point2D p = new Point2D(x, y);
+    if (grid.containsKey(p)) {
+      if(!digMap.containsKey(p)&&!correct.contains(p)){
+        digMap.put(p,grid.get(p).getColor());
+        correct.add(p);
+      }
+      System.out.println(output("You found a stack!"));
+    }
+    else {
+      if (!digMap.containsKey(p)) {
+        digMap.put(p, 'X');
+      }
+      System.out.println(output("You missed!"));
+    }
+  }
+
+  public char findDig(int x, int y) {
+    Point2D pp = new Point2D(x, y);
+    if (digMap.containsKey(pp)) {
+      return digMap.get(pp);
+    }
+    return ' ';
+  }
+
+  public char findMyself(int x, int y) {
+    Point2D pp = new Point2D(x, y);
+    if (digMap.containsKey(pp) && grid.containsKey(pp)) {
+      return '*';
+    }
+    else if (grid.containsKey(pp)) {
+      Stash s = grid.get(pp);
+      return s.getColor();
+    }
+    return ' ';
+  }
+  
+  public int checkValid(Vector<Point2D> list) {
+    int n = list.size();
+    for (int i = 0; i < n; i++) {
+      Point2D p = list.get(i);
+      if (p.getX()<0||p.getY()<0||(p.getX() - width) >= 0 || (p.getY() - height) >= 0) {
+        return 0;
+      }
+      if(grid.containsKey(p)){
+        return -1;
+      }
+    }
+    return 1;
+  }
+
+  public int getW() {
+    return width;
+  }
+
+  public int getH() {
+    return height;
+  }
+  
+  public boolean addStash(Stash s) {
+    Vector<Point2D> list = s.getLoc();
+    if (checkValid(list)==1) {
+      int n = list.size();
+      for (int i = 0; i < n; i++) {
+        grid.put(list.elementAt(i), s);
+      }
+      return true;
+    }
+    else if (checkValid(list) == 0) {
+      System.out.println(output("Error:stack going off the grid! Please try again!"));
+      return false;
+    }
+    else {
+      System.out.println(output("Error: collides with another stack! Please try again!"));
+      return false;
+    }
+  }
+  
+  public char findLoc(int x, int y) {
+    Point2D p = new Point2D(x, y);
+    if(grid.containsKey(p)){
+      Stash s = grid.get(p);
+      return s.getColor();
+    }
+    return ' ';
+  }
+
+ 
+
+}

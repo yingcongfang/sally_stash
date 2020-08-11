@@ -1,0 +1,32 @@
+package ece651;
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
+
+public class BoardTest {
+  @Test
+  public void test_board() {
+    Board b = new Board();
+        Draw draw = new Draw();
+        Stash s1 = new Stash('R', 4, 1, 1);
+        s1.putH();
+        b.addStash(s1);
+        Stash s2 = new Stash('P', 2, 1, 0);
+        s2.putV();
+        b.addStash(s2);
+        Stash s3 = new Stash('P', 2, 9, 19);
+        s3.putH();
+        b.addStash(s3);
+        Stash s4 = new Stash('P', 2, -1, 1);
+        s4.putH();
+        b.addStash(s4);
+        draw.printBoard(b);
+        Parsing par = new Parsing("G4V");
+        System.out.println("x:"+par.getX()+" y:"+par.getY()+" o:"+par.getOri());
+        b.dig(1, 1);
+        b.dig(0, 0);
+        draw.printBoard(b);
+        
+  }
+
+}

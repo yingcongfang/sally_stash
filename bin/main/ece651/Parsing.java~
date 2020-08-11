@@ -1,0 +1,42 @@
+package ece651;
+
+public class Parsing {
+  private String command;
+
+
+  public boolean checkPar() {
+    if (command.length() == 3 && command.charAt(2)=='H') {
+      return false;
+    }
+    if (command.length() == 3 && command.charAt(2) == 'V') {
+      return false;
+    }
+    if (command.length() == 2) {
+      return false;
+    }
+    return true;
+  }
+
+
+  
+  public Parsing(String s) {
+    command = s.toUpperCase();
+  }
+
+  public int getX() {
+    int x = command.charAt(1)-'0';
+    return x;
+  }
+
+  public int getY() {
+    int y = command.charAt(0)-'A';
+    return y;
+  }
+
+  public char getOri() {
+    char ori = command.charAt(2);
+    return ori;
+  }
+
+  
+}

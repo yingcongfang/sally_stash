@@ -1,0 +1,47 @@
+package ece651;
+
+import java.util.Vector;
+
+import javafx.geometry.Point2D;
+
+
+
+public class Stash {
+  private char color;
+  private int dimension;
+  private Vector<Point2D> loc;
+  private Point2D put;
+  
+  public Stash() {
+    loc = new Vector<>();
+  }
+
+  public Stash(char c, int d, int x, int y) {
+    loc = new Vector<>();
+    color = c;
+    dimension = d;
+    put = new Point2D(x, y);
+  }
+
+  public char getColor() {
+    return color;
+  }
+
+  public Vector<Point2D> getLoc() {
+    return loc;
+  }
+
+  public void putH(){
+    for (int i = 0; i < dimension; i++) {
+      Point2D pp = new Point2D(put.getX() + i, put.getY());
+      loc.add(pp);
+    }
+  }
+
+  public void putV() {
+    for (int i = 0; i < dimension; i++) {
+      Point2D pp = new Point2D(put.getX(), put.getY()+i);
+      loc.add(pp);
+    }
+  }
+}
